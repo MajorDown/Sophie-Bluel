@@ -29,7 +29,7 @@ sendInput.addEventListener("click", async (event) => {
     const response = await logIn(user);
     console.log(response);
     if (response.userId === 1) {
-      localStorage.setItem("token", response.token);
+      sessionStorage.setItem("token", response.token);
       window.location.href = "index.html";
     } else errorDial.style.display = "block";
   } catch (err) {

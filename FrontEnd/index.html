@@ -50,15 +50,15 @@
 		</section>
 		<section id="portfolio">
 			<h2>Mes Projets
-				<div id="modifier">
+				<button id="modifier">
 					<img class="modifier-icon" src="./assets/icons/modifier-icon.png">
 					<p>modifier</p>
-				</div>
+				</button>
 			</h2>
 
 			<!------------------AJOUT------------------------------>
 			<div id="filter-by-category">
-				<button class="filter-btn">Tous</button>
+				<button class="filter-btn" data-id="0">Tous</button>
 			</div>
 			<!------------------------------------------------>
 			<div class="gallery">
@@ -87,6 +87,18 @@
 			</ul>
 		</nav>
 	</footer>
+
+	<div id="edition-modal">
+		<div id="edition-modal-content">
+			<a href="" id="modal-close">&times;</a>
+			<h3>Galerie photo</h3>
+			<div id="modal-gallery"></div>
+			<div id="modal-border"></div>
+			<button id="modal-add-photo">Ajouter une photo</button>
+			<a id="suppress-gallery">Supprimer la galerie</a>
+		</div>
+	</div>
+	<script type="module" src="./scripts/edition.js"></script>
 	<script type="module" src="./scripts/gallery.js"></script>
 </body>
 
