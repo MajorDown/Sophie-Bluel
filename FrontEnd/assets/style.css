@@ -240,6 +240,17 @@ li:hover {
 	align-items: center;
 }
 
+#modifier-intro {
+	display: none;
+}
+
+#modifier-intro.active {
+	display: inline;
+	position: relative;
+	top: -30px;
+	left: 50px;
+}
+
 #introduction figure {
 	flex: 1
 }
@@ -268,24 +279,25 @@ li:hover {
 	position: relative;
 }
 
+
 /************AJOUT*****************************/
 #modifier {
-	position: absolute;
-	right: 31%;
-	bottom: 7px;
+	position: relative;
+	left: 20px;
 	font-size: 15px;
 	display: none;
-	gap: 10px;
-	border: none;
-	background: none;
 	cursor: pointer;
+	color: black;
+	font-weight: 100;
 }
 
 #modifier.active {
 	display: inline-flex;
+	align-items: center;
+	gap: 10px;
 }
 
-#modifier .modifier-icon {
+#modifier i {
 	width: 15px;
 	height: 15px;
 }
@@ -346,7 +358,8 @@ form {
 	flex-direction: column;
 }
 
-input {
+input,
+select {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
@@ -418,18 +431,26 @@ input[type="submit"] {
 	height: 730px;
 	background: white;
 	border-radius: 5px;
-	padding: 15px;
+}
+
+#modal-view-gallery {
+	display: none;
+}
+
+#modal-view-gallery.active {
+	width: 100%;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 
-#modal-close {
+.modal-close {
 	position: relative;
 	left: 300px;
-	top: 10px;
+	top: 5px;
 	color: black;
-	font-size: 23px;
+	font-size: 30px;
 	text-decoration: none;
 }
 
@@ -452,18 +473,18 @@ input[type="submit"] {
 	margin: 1px;
 }
 
-#edition-modal-content img {
+#modal-view-gallery img {
 	width: 100%;
 }
 
-#modal-border {
+.modal-border {
 	width: 420px;
 	height: 2px;
 	margin: 30px 0px 50px 0px;
 	background-color: rgba(39, 39, 39, 0.32);
 }
 
-#modal-add-photo {
+#add-photo-modal-btn {
 	border: none;
 	background: #1D6154;
 	color: white;
@@ -480,6 +501,93 @@ input[type="submit"] {
 	font-size: 20px;
 	cursor: pointer;
 }
+
+#modal-view-add-photo {
+	display: none;
+}
+
+#modal-view-add-photo.active {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#goBack {
+	position: relative;
+	width: 30px;
+	left: -290px;
+	top: 10px;
+}
+
+#modal-view-add-photo.active .modal-close {
+	top: -20px;
+}
+
+#addPhoto {
+	width: 420p;
+	height: 170px;
+	background: #E8F1F7;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 5px;
+}
+
+#addPhotoIcon {
+	width: 58px;
+	height: 46px;
+	padding-top: 20px;
+}
+
+#addPhotoBtn {
+	box-shadow: none;
+	width: 300px;
+	height: 200px;
+}
+
+#addPhotoBtn::-webkit-file-upload-button {
+	color: transparent;
+	visibility: hidden;
+}
+
+#addPhotoBtn::before {
+	position: relative;
+	left: 60px;
+	top: 20px;
+	content: '+ Ajouter Photo';
+	color: #306685;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 15px 35px;
+	background-color: #CBD6DC;
+	border-radius: 30px;
+	display: inline;
+}
+
+#addPhoto p {
+	padding-bottom: 20px;
+}
+
+.uploaded-photo {
+	position: fixed;
+	max-height: 170px;
+
+}
+
+#modal-view-add-photo input[type="submit"] {
+	background-color: #A7A7A7;
+	color: white;
+	margin-bottom: 50px;
+	width: 60%;
+}
+
+
+#modal-view-add-photo .modal-border {
+	margin-bottom: 10px;
+}
+
 
 /***********************************************/
 
