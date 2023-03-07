@@ -1,4 +1,4 @@
-import { getWorks, getCategories } from "./getData.js";
+import { getWorks, getCategories } from "./fetchData.js";
 
 // RECUPERER LES TRAVAUX
 let works = await getWorks();

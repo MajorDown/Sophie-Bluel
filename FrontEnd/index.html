@@ -67,7 +67,7 @@
 		<section id="contact">
 			<h2>Contact</h2>
 			<p>Vous avez un projet ? Discutons-en !</p>
-			<form action="#" method="post">
+			<form>
 				<label for="name">Nom</label>
 				<input type="text" name="name" id="name">
 				<label for="email">Email</label>
@@ -87,12 +87,15 @@
 		</nav>
 	</footer>
 
-	<div id="edition-modal">
+	<aside id="edition-modal">
+		<div id="overlay">.</div>
 		<div id="edition-modal-content">
 			<div id="modal-view-gallery" class="active">
 				<a href="" class="modal-close">&times;</a>
 				<h3>Galerie photo</h3>
-				<div id="modal-gallery"><!--AJOUT DYNAMIQUE--></div>
+				<div id="modal-gallery">
+					<!--AJOUT DYNAMIQUE-->
+				</div>
 				<div class="modal-border"></div>
 				<button id="add-photo-modal-btn">Ajouter une photo</button>
 				<a id="suppress-gallery">Supprimer la galerie</a>
@@ -101,16 +104,16 @@
 				<a href="#modal-view-gallery" id="goBack"><img src="./assets/icons/Arrow_Back.png"></a>
 				<a href="" class="modal-close">&times;</a>
 				<h3>Ajout photo</h3>
-				<form action="">
+				<form id="new-work-form">
 					<div id="addPhoto">
 						<img id="addPhotoIcon" src="./assets/icons/addPhoto.png" alt="">
-						<input type="file" id="addPhotoBtn" accept="image/png, image/jpeg" required>
+						<input type="file" id="addPhotoBtn" name="image" accept="image/png, image/jpeg" required>
 						<p>jpg, png : 4mo max</p>
 					</div>
 					<label for="project-title">Titre</label>
-					<input id="project-title" type="text" required>
+					<input id="project-title" type="text" name="title" required>
 					<label for="project-category">Catégorie</label>
-					<select id="project-category" required>
+					<select id="project-category" name="category" required>
 						<option selected value=""></option>
 					</select>
 					<div class="modal-border"></div>
@@ -120,7 +123,7 @@
 
 			</div>
 		</div>
-	</div>
+	</aside>
 	<script type="module" src="./scripts/edition.js"></script>
 	<script type="module" src="./scripts/gallery.js"></script>
 </body>

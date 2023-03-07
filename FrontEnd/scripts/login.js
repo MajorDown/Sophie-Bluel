@@ -4,7 +4,6 @@ const sendInput = document.getElementById("send-input");
 const errorDial = document.getElementById("error-dial");
 
 // REQUETE POST
-
 async function logIn(data) {
   const loginUrl = "http://localhost:5678/api/users/login";
   const loginOptions = {
@@ -18,7 +17,6 @@ async function logIn(data) {
 }
 
 // DECLENCHER LA REQUETE POST
-
 sendInput.addEventListener("click", async (event) => {
   try {
     event.preventDefault();
