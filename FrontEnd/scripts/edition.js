@@ -159,8 +159,8 @@ async function suppressWork(id) {
 newWorkForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const formData = new FormData();
-  formData.append("image", addPhotoBtn.files[0]);
   formData.append("title", projectTitle.value);
+  formData.append("image", addPhotoBtn.files[0]);
   formData.append("category", projectCategory.value);
   for (const [key, value] of formData.entries()) {
     console.log(key, value);

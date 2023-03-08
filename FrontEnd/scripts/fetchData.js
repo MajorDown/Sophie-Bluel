@@ -29,7 +29,6 @@ export async function postNewWork(data) {
     method: "POST",
     headers: {
       accept: "application/json",
-      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     },
     body: data,
