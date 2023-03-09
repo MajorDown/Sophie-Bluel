@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+</head>
+
+<body>
+    <form id="new-work-form">
+        <input type="file" id="addPhotoBtn" name="image" accept="image/png, image/jpeg" required><br>
+        <label for="project-title">Titre</label>
+        <input id="project-title" type="text" name="title" required value="Romano"><br>
+        <label for="project-category">Catégorie</label>
+        <select id="project-category" name="category" required><br>
+            <option selected value="1">1</option>
+        </select><br>
+        <input type="submit" value="Valider">
+    </form>
+    <script type="module" src="./scripts/edition.js"></script>
+</body>
+
+</html>

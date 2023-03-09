@@ -13,13 +13,11 @@ export async function deleteWork(id) {
   const options = {
     method: "DELETE",
     headers: {
-      accept: "*/*",
+      accept: "*application/json*",
       Authorization: `Bearer ${token}`,
     },
   };
-  return await (
-    await fetch(`http://localhost:5678/api/works/${id}`, options)
-  ).json();
+  return await fetch(`http://localhost:5678/api/works/${id}`, options);
 }
 
 // ENVOYER UN NOUVEAU WORK
@@ -33,5 +31,5 @@ export async function postNewWork(data) {
     },
     body: data,
   };
-  return await (await fetch("http://localhost:5678/api/works", options)).json();
+  return await fetch("http://localhost:5678/api/works", options);
 }

@@ -91,14 +91,14 @@
 		<div id="overlay">.</div>
 		<div id="edition-modal-content">
 			<div id="modal-view-gallery" class="active">
-				<a href="" class="modal-close">&times;</a>
+				<a href="#" class="modal-close">&times;</a>
 				<h3>Galerie photo</h3>
 				<div id="modal-gallery">
 					<!--AJOUT DYNAMIQUE-->
 				</div>
 				<div class="modal-border"></div>
 				<button id="add-photo-modal-btn">Ajouter une photo</button>
-				<a id="suppress-gallery">Supprimer la galerie</a>
+				<a href="#" id="suppress-gallery">Supprimer la galerie</a>
 			</div>
 			<div id="modal-view-add-photo">
 				<a href="#modal-view-gallery" id="goBack"><img src="./assets/icons/Arrow_Back.png"></a>
@@ -108,7 +108,7 @@
 					<div id="addPhoto">
 						<img id="addPhotoIcon" src="./assets/icons/addPhoto.png" alt="">
 						<input type="file" id="addPhotoBtn" name="image" accept="image/png, image/jpeg" required>
-						<p>jpg, png : 4mo max</p>
+						<p id="addPhotoInstructions">jpg, png : 4mo max</p>
 					</div>
 					<label for="project-title">Titre</label>
 					<input id="project-title" type="text" name="title" required>
@@ -124,8 +124,8 @@
 			</div>
 		</div>
 	</aside>
-	<script type="module" src="./scripts/edition.js"></script>
 	<script type="module" src="./scripts/gallery.js"></script>
+	<script type="module" src="./scripts/edition.js"></script>
 </body>
 
 </html>
