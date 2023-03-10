@@ -1,6 +1,7 @@
 // IMPORTS
-import { getEditionMode, removeEditionMode } from "./authentification.js";
+import { manageEditionMode } from "./authentification.js";
 import { majModalgallery } from "./modal.gallery.js";
+import { majGallery } from "./gallery.js";
 import {
   previewPhoto,
   createOptionsByCategories,
@@ -23,7 +24,7 @@ const addPhotoBtn = document.getElementById("addPhotoBtn");
 const newWorkForm = document.getElementById("new-work-form");
 
 // ACCES AU MODE EDITION
-getEditionMode();
+manageEditionMode();
 
 // OUVRIR LA MODAL (DIRECTEMENT SUR "GALLERIE PHOTO")
 function openEditionModal() {
@@ -48,13 +49,16 @@ addPhotoBtn.addEventListener("change", previewPhoto);
 goBack.addEventListener("click", () => returnToGalleryModal());
 
 // ENVOYER LE FORMULAIRE POUR UN NOUVEAU WORK
-newWorkForm.addEventListener("submit", (event) => {
-  createNewWork(event);
+newWorkForm.addEventListener("submit", async (event) => {
   event.preventDefault();
+  await createNewWork();
+  await majModalgallery();
+  returnToGalleryModal();
 });
 
 // FERMER LA MODAL EDITION
-function closeModal() {
+async function closeModal() {
+  await majGallery();
   modalGallery.innerHTML = "";
   modalViewGallery.classList.remove("active");
   editionModal.classList.remove("active");
@@ -64,7 +68,6 @@ function closeModal() {
 modalClose.addEventListener("click", () => closeModal());
 
 // POUVOIR FERMER LA MODAL EN CLIQUANT A L'EXTERIEUR
-overlay.addEventListener("click", () => closeModal());
-
-// SORTIR DU MODE EDITION
-loginToLogout.addEventListener("click", (e) => removeEditionMode(e));
+overlay.addEventListener("click", () => {
+  closeModal();
+});

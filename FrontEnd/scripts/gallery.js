@@ -18,10 +18,15 @@ function createfigure(work) {
 }
 
 // IMPLEMENTER LA GALLERY AVEC LES WORKS
-const gallery = document.querySelector(".gallery");
-works.map((work) => {
-  gallery.appendChild(createfigure(work));
-});
+export async function majGallery() {
+  const gallery = document.querySelector(".gallery");
+  let works = await getWorks();
+  gallery.innerHTML = "";
+  works.map((work) => {
+    gallery.appendChild(createfigure(work));
+  });
+}
+majGallery();
 
 // RECUPERER LES CATEGORIES DANS DES BUTTON
 let categories = await getCategories();
@@ -40,7 +45,7 @@ categories.map((category) => {
 // ACTIVER LES BUTTON
 const filterButtons = document.querySelectorAll(".filter-btn");
 filterButtons.forEach((button) => {
-  button.addEventListener("click", () => {
+  button.addEventListener("click", async () => {
     const dataId = button.dataset.id;
     console.log("data-id du button cliqué :", dataId);
     // ACTUALISER L'APPARENCE DES BUTTON
@@ -51,6 +56,7 @@ filterButtons.forEach((button) => {
     button.style.background = "#1D6154";
     button.style.color = "white";
     // REMETTRE A ZERO LA GALLERIE
+    let works = await getWorks();
     gallery.innerHTML = "";
     // SI LE BUTTON EST 'TOUS'
     if (dataId === "0") {

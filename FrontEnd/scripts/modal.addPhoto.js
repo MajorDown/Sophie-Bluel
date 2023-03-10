@@ -57,20 +57,15 @@ export function createOptionsByCategories() {
 }
 
 // ENVOYER LE FORMULAIRE POUR UN NOUVEAU WORK
-export async function createNewWork(event) {
+export async function createNewWork() {
   // DECLARER UN NOUVEAU FORMDATA A PARTIR DU FORMULAIRE
   const formData = new FormData();
   formData.append("title", projectTitle.value);
   formData.append("image", addPhotoBtn.files[0]);
   formData.append("category", projectCategory.value);
-  for (const [key, value] of formData.entries()) {
-    console.log("données du formData : ", key, ": ", value);
-  }
   //ENVOI DE LA REQUETE
-  event.preventDefault();
-  postNewWork(formData);
   const postedWork = await postNewWork(formData);
-  console.log("nouveau work : ", postedWork);
+  console.log("réponse du serveur : ", postedWork);
   addPhotoBtn.value = "";
   projectTitle.value = "";
   projectCategory.value = "";

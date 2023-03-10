@@ -2,13 +2,14 @@
 import { getWorks, deleteWork } from "./fetchData.js";
 
 // ASYNCHRONES
-const works = await getWorks();
 
 // ELEMENTS DU DOM
 const modalGallery = document.getElementById("modal-gallery");
 
 // ACTUALISER LA GALLERY AVEC LES TRAVAUX
-export function majModalgallery() {
+export async function majModalgallery() {
+  const works = await getWorks();
+  modalGallery.innerHTML = "";
   works.map((work) => {
     modalGallery.appendChild(createCard(work));
   });
@@ -40,8 +41,8 @@ async function suppressWork(event, id) {
     window.confirm("Voulez-vous vraiment supprimer ce projet de la gallerie ?")
   ) {
     event.preventDefault();
-    const suppression = await deleteWork(id);
-    console.log(suppression);
-    return;
+    const deleteResponse = await deleteWork(id);
+    console.log(deleteResponse);
+    await majModalgallery();
   }
 }
