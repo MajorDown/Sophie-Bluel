@@ -398,6 +398,10 @@ input[type="submit"] {
 	text-align: center;
 }
 
+#send-input {
+	cursor: pointer;
+}
+
 #lostMdp {
 	text-align: center;
 	color: #1D6154;
@@ -583,6 +587,7 @@ input[type="submit"] {
 	background-color: #CBD6DC;
 	border-radius: 30px;
 	display: inline;
+	cursor: pointer;
 }
 
 #addPhoto p {
@@ -602,9 +607,12 @@ input[type="submit"] {
 	width: 60%;
 }
 
-
 #modal-view-add-photo .modal-border {
 	margin-bottom: 10px;
+}
+
+#project-submit {
+	cursor: pointer;
 }
 
 

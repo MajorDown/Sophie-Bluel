@@ -1,19 +1,8 @@
 // IMPORTS
 import { getWorks, deleteWork } from "./fetchData.js";
 
-// ASYNCHRONES
-
 // ELEMENTS DU DOM
 const modalGallery = document.getElementById("modal-gallery");
-
-// ACTUALISER LA GALLERY AVEC LES TRAVAUX
-export async function majModalgallery() {
-  const works = await getWorks();
-  modalGallery.innerHTML = "";
-  works.map((work) => {
-    modalGallery.appendChild(createCard(work));
-  });
-}
 
 // CREER UNE CARD PAR TRAVAIL
 export function createCard(work) {
@@ -35,14 +24,38 @@ export function createCard(work) {
   return card;
 }
 
+// ACTUALISER LA GALLERY AVEC LES TRAVAUX
+export async function majModalgallery() {
+  try {
+    const works = await getWorks();
+    modalGallery.innerHTML = "";
+    works.map((work) => {
+      modalGallery.appendChild(createCard(work));
+    });
+  } catch (err) {
+    window.alert("Problême de connection : impossible de charger la gallerie");
+    console.log(err);
+  }
+}
+
 // SUPPRIMER UN WORK
 async function suppressWork(event, id) {
   if (
     window.confirm("Voulez-vous vraiment supprimer ce projet de la gallerie ?")
   ) {
     event.preventDefault();
-    const deleteResponse = await deleteWork(id);
-    console.log(deleteResponse);
-    await majModalgallery();
+    try {
+      const deleteResponse = await deleteWork(id);
+      console.log(
+        "Requète DELETE envoyé. Réponse du serveur : ",
+        deleteResponse
+      );
+      await majModalgallery();
+    } catch (err) {
+      window.alert(
+        "Problême de connection : impossible de supprimer le projet"
+      );
+      console.log(err);
+    }
   }
 }

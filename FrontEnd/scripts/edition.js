@@ -10,7 +10,6 @@ import {
 } from "./modal.addPhoto.js";
 
 // ELEMENTS DU DOM
-const loginToLogout = document.getElementById("loginToLogout");
 const modifierBtn = document.getElementById("modifier");
 const editionModal = document.getElementById("edition-modal");
 const overlay = document.getElementById("overlay");
