@@ -1,7 +1,8 @@
 // IMPORTS
 import { manageEditionMode } from "./authentification.js";
 import { majModalgallery } from "./modal.gallery.js";
-import { majGallery } from "./gallery.js";
+import { categories, majGallery, works } from "./gallery.js";
+import { getWorks } from "./fetchData.js";
 import {
   previewPhoto,
   createOptionsByCategories,
@@ -29,7 +30,7 @@ manageEditionMode();
 function openEditionModal() {
   editionModal.classList.add("active");
   modalViewGallery.classList.add("active");
-  majModalgallery();
+  majModalgallery(works);
 }
 modifierBtn.addEventListener("click", () => openEditionModal());
 
@@ -37,12 +38,12 @@ modifierBtn.addEventListener("click", () => openEditionModal());
 function openAddPhotoModal() {
   modalViewGallery.classList.remove("active");
   modalViewAddPhoto.classList.add("active");
-  createOptionsByCategories();
+  createOptionsByCategories(categories);
 }
 addPhotoModalBtn.addEventListener("click", () => openAddPhotoModal());
 
 // PREVISUALISER L'UPLOAD DE L'INPUT
-addPhotoBtn.addEventListener("change", previewPhoto);
+addPhotoBtn.addEventListener("change", () => previewPhoto());
 
 // REVENIR A LA MODAL GALLERY
 goBack.addEventListener("click", () => returnToGalleryModal());
@@ -51,13 +52,14 @@ goBack.addEventListener("click", () => returnToGalleryModal());
 newWorkForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   await createNewWork();
-  await majModalgallery();
+  const newWorks = await getWorks();
+  majModalgallery(newWorks);
+  majGallery(newWorks);
   returnToGalleryModal();
 });
 
 // FERMER LA MODAL EDITION
 async function closeModal() {
-  await majGallery();
   modalGallery.innerHTML = "";
   modalViewGallery.classList.remove("active");
   editionModal.classList.remove("active");

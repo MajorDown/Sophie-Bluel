@@ -1,5 +1,7 @@
 // IMPORTS
 import { getWorks, getCategories } from "./fetchData.js";
+export let works = await getWorks();
+export let categories = await getCategories();
 
 // ELEMENTS DU DOM
 const filterByCategory = document.getElementById("filter-by-category");
@@ -19,9 +21,8 @@ function createfigure(work) {
 }
 
 // IMPLEMENTER LA GALLERY AVEC LES WORKS (EXPORTABLE)
-export async function majGallery() {
+export async function majGallery(works) {
   try {
-    let works = await getWorks();
     gallery.innerHTML = "";
     works.map((work) => {
       gallery.appendChild(createfigure(work));
@@ -31,12 +32,11 @@ export async function majGallery() {
     console.log(err);
   }
 }
-await majGallery();
+await majGallery(works);
 
 // CREER UN <BUTTON> PAR CATEGORIE EXISTANTE
-export async function majFilters() {
+export async function majFilters(categories) {
   try {
-    let categories = await getCategories();
     categories.map((category) => {
       const button = document.createElement("button");
       button.innerText = category.name;
@@ -49,14 +49,14 @@ export async function majFilters() {
     console.log(err);
   }
 }
-await majFilters();
+await majFilters(categories);
 
 // ACTIVER LES BUTTON
 const filterButtons = document.querySelectorAll(".filter-btn");
 filterButtons.forEach((button) => {
   button.addEventListener("click", async () => {
     try {
-      const dataId = button.dataset.id;
+      const dataId = button.dataset.id; // suite à data-id
       // ACTUALISER L'APPARENCE DES BUTTON
       filterButtons.forEach((btn) => {
         btn.style.background = "none";
@@ -65,7 +65,6 @@ filterButtons.forEach((button) => {
       button.style.background = "#1D6154";
       button.style.color = "white";
       // REMETTRE A ZERO LA GALLERIE
-      let works = await getWorks();
       gallery.innerHTML = "";
       // SI LE BUTTON EST 'TOUS'
       if (dataId === "0") {
@@ -78,7 +77,7 @@ filterButtons.forEach((button) => {
       else {
         // CREER UN TABLEAU CONTENANT LES TRAVAUX FILTRES
         const filteredWorks = works.filter((work) => {
-          return work.categoryId === +dataId; //dataId est ici transformé en Int gràce au "+"
+          return work.categoryId === +dataId; // dataId est ici transformé en Int gràce au "+"
         });
         console.log("travaux filtrés : ", filteredWorks);
         // INTEGRER LES TRAVAUX FILTRES DANS LA GALLERIE

@@ -1,5 +1,5 @@
 // IMPORTS
-import { getCategories, postNewWork } from "./fetchData.js";
+import { postNewWork } from "./fetchData.js";
 
 // ELEMENTS DU DOM
 const modalViewGallery = document.getElementById("modal-view-gallery");
@@ -23,6 +23,7 @@ export function cancelUploadedPhoto() {
 // REVENIR A LA MODAL GALLERY
 export function returnToGalleryModal() {
   cancelUploadedPhoto();
+  projectTitle.value = "";
   modalViewAddPhoto.classList.remove("active");
   modalViewGallery.classList.add("active");
 }
@@ -44,10 +45,13 @@ export function previewPhoto() {
 }
 
 // IMPLEMENTER LES CATEGORY DANS LE FORMULAIRE
-export async function createOptionsByCategories() {
+export async function createOptionsByCategories(cat) {
   try {
-    const categories = await getCategories();
-    categories.map((category) => {
+    projectCategory.innerHTML = "";
+    const nullOption = document.createElement("option");
+    nullOption.value = "";
+    projectCategory.appendChild(nullOption);
+    cat.map((category) => {
       const option = document.createElement("option");
       option.value = category.id;
       option.innerText = category.name;
@@ -67,7 +71,9 @@ export async function createNewWork() {
   const formData = new FormData();
   formData.append("title", projectTitle.value);
   formData.append("image", addPhotoBtn.files[0]);
-  formData.append("category", projectCategory.value);
+  if (projectCategory.value != "") {
+    formData.append("category", projectCategory.value);
+  }
   //ENVOI DE LA REQUETE
   try {
     const postedWork = await postNewWork(formData);

@@ -1,5 +1,5 @@
 // IMPORTS
-import { getWorks, deleteWork } from "./fetchData.js";
+import { deleteWork } from "./fetchData.js";
 
 // ELEMENTS DU DOM
 const modalGallery = document.getElementById("modal-gallery");
@@ -12,7 +12,12 @@ export function createCard(work) {
   bin.classList.add("bin");
   bin.src = "./assets/icons/binIcon.png";
   bin.alt = "supprimer";
-  bin.addEventListener("click", (event) => suppressWork(event, work.id));
+  bin.addEventListener("click", async (event) => {
+    const isDeleted = await suppressWork(event, work.id);
+    if (isDeleted === true) {
+      card.remove();
+    }
+  });
   const img = document.createElement("img");
   img.src = work.imageUrl;
   img.alt = work.title;
@@ -25,9 +30,8 @@ export function createCard(work) {
 }
 
 // ACTUALISER LA GALLERY AVEC LES TRAVAUX
-export async function majModalgallery() {
+export function majModalgallery(works) {
   try {
-    const works = await getWorks();
     modalGallery.innerHTML = "";
     works.map((work) => {
       modalGallery.appendChild(createCard(work));
@@ -50,7 +54,7 @@ async function suppressWork(event, id) {
         "Requète DELETE envoyé. Réponse du serveur : ",
         deleteResponse
       );
-      await majModalgallery();
+      return deleteResponse.ok;
     } catch (err) {
       window.alert(
         "Problême de connection : impossible de supprimer le projet"
