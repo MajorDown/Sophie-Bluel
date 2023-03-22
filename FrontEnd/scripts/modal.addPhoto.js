@@ -4,9 +4,6 @@ import { postNewWork } from "./fetchData.js";
 // ELEMENTS DU DOM
 const modalViewGallery = document.getElementById("modal-view-gallery");
 const modalViewAddPhoto = document.getElementById("modal-view-add-photo");
-const addPhotoBtn = document.getElementById("addPhotoBtn");
-const addPhotoIcon = document.getElementById("addPhotoIcon");
-const addPhotoInstructions = document.getElementById("addPhotoInstructions");
 const projectTitle = document.getElementById("project-title");
 const projectCategory = document.getElementById("project-category");
 
@@ -14,18 +11,44 @@ const projectCategory = document.getElementById("project-category");
 export function cancelUploadedPhoto() {
   if (document.querySelector(".uploaded-photo")) {
     document.querySelector(".uploaded-photo").remove();
+    const addPhotoIcon = document.getElementById("addPhotoIcon");
     addPhotoIcon.style.display = "inline";
+    const addPhotoBtn = document.getElementById("addPhotoBtn");
     addPhotoBtn.style.display = "inline";
+    const addPhotoInstructions = document.getElementById(
+      "addPhotoInstructions"
+    );
     addPhotoInstructions.style.display = "block";
   }
 }
 
 // REVENIR A LA MODAL GALLERY
 export function returnToGalleryModal() {
-  cancelUploadedPhoto();
+  const projectTitle = document.getElementById("project-title");
   projectTitle.value = "";
   modalViewAddPhoto.classList.remove("active");
   modalViewGallery.classList.add("active");
+}
+
+// IMPLEMENTER LES CATEGORY DANS LE FORMULAIRE
+export async function createOptionsByCategories(listOfCategories) {
+  try {
+    projectCategory.innerHTML = "";
+    const nullOption = document.createElement("option");
+    nullOption.value = "";
+    projectCategory.appendChild(nullOption);
+    listOfCategories.map((category) => {
+      const option = document.createElement("option");
+      option.value = category.id;
+      option.innerText = category.name;
+      projectCategory.appendChild(option);
+    });
+  } catch (err) {
+    window.alert(
+      "Problême de connection : impossible de récupérer les catégories."
+    );
+    console.log(err);
+  }
 }
 
 // PREVISUALISER LA PHOTO UPLOADEE
@@ -44,36 +67,13 @@ export function previewPhoto() {
   addPhotoInstructions.style.display = "none";
 }
 
-// IMPLEMENTER LES CATEGORY DANS LE FORMULAIRE
-export async function createOptionsByCategories(cat) {
-  try {
-    projectCategory.innerHTML = "";
-    const nullOption = document.createElement("option");
-    nullOption.value = "";
-    projectCategory.appendChild(nullOption);
-    cat.map((category) => {
-      const option = document.createElement("option");
-      option.value = category.id;
-      option.innerText = category.name;
-      projectCategory.appendChild(option);
-    });
-  } catch (err) {
-    window.alert(
-      "Problême de connection : impossible de récupérer les catégories."
-    );
-    console.log(err);
-  }
-}
-
 // ENVOYER LE FORMULAIRE POUR UN NOUVEAU WORK
 export async function createNewWork() {
   // DECLARER UN NOUVEAU FORMDATA A PARTIR DU FORMULAIRE
   const formData = new FormData();
   formData.append("title", projectTitle.value);
   formData.append("image", addPhotoBtn.files[0]);
-  if (projectCategory.value != "") {
-    formData.append("category", projectCategory.value);
-  }
+  formData.append("category", projectCategory.value);
   //ENVOI DE LA REQUETE
   try {
     const postedWork = await postNewWork(formData);

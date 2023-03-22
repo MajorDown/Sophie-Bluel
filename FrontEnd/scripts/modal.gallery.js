@@ -1,9 +1,6 @@
 // IMPORTS
 import { deleteWork } from "./fetchData.js";
 
-// ELEMENTS DU DOM
-const modalGallery = document.getElementById("modal-gallery");
-
 // CREER UNE CARD PAR TRAVAIL
 export function createCard(work) {
   const card = document.createElement("div");
@@ -16,6 +13,8 @@ export function createCard(work) {
     const isDeleted = await suppressWork(event, work.id);
     if (isDeleted === true) {
       card.remove();
+      const figureToDelete = document.getElementById("figure" + work.id);
+      figureToDelete.remove();
     }
   });
   const img = document.createElement("img");
@@ -29,11 +28,12 @@ export function createCard(work) {
   return card;
 }
 
-// ACTUALISER LA GALLERY AVEC LES TRAVAUX
-export function majModalgallery(works) {
+// ACTUALISER LA MODAL GALLERY AVEC LES TRAVAUX
+export function majModalgallery(listOfWorks) {
+  const modalGallery = document.getElementById("modal-gallery");
   try {
     modalGallery.innerHTML = "";
-    works.map((work) => {
+    listOfWorks.map((work) => {
       modalGallery.appendChild(createCard(work));
     });
   } catch (err) {

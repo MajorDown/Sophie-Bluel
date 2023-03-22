@@ -1,15 +1,9 @@
-// IMPORTS
-import { getWorks, getCategories } from "./fetchData.js";
-export let works = await getWorks();
-export let categories = await getCategories();
-
 // ELEMENTS DU DOM
-const filterByCategory = document.getElementById("filter-by-category");
-const gallery = document.querySelector(".gallery");
 
 // CREER UN <FIGURE> PAR TRAVAIL
-function createfigure(work) {
+export function createfigure(work) {
   const figure = document.createElement("figure");
+  figure.id = "figure" + work.id;
   const img = document.createElement("img");
   img.src = work.imageUrl;
   img.alt = work.title;
@@ -21,10 +15,11 @@ function createfigure(work) {
 }
 
 // IMPLEMENTER LA GALLERY AVEC LES WORKS (EXPORTABLE)
-export async function majGallery(works) {
+export function majGallery(listOfWorks) {
+  const gallery = document.querySelector(".gallery");
   try {
     gallery.innerHTML = "";
-    works.map((work) => {
+    listOfWorks.map((work) => {
       gallery.appendChild(createfigure(work));
     });
   } catch (err) {
@@ -32,12 +27,12 @@ export async function majGallery(works) {
     console.log(err);
   }
 }
-await majGallery(works);
 
 // CREER UN <BUTTON> PAR CATEGORIE EXISTANTE
-export async function majFilters(categories) {
+export function majFilters(listOfCategories) {
+  const filterByCategory = document.getElementById("filter-by-category");
   try {
-    categories.map((category) => {
+    listOfCategories.map((category) => {
       const button = document.createElement("button");
       button.innerText = category.name;
       button.setAttribute("data-id", category.id);
@@ -49,45 +44,49 @@ export async function majFilters(categories) {
     console.log(err);
   }
 }
-await majFilters(categories);
 
-// ACTIVER LES BUTTON
-const filterButtons = document.querySelectorAll(".filter-btn");
-filterButtons.forEach((button) => {
-  button.addEventListener("click", async () => {
-    try {
-      const dataId = button.dataset.id; // suite à data-id
-      // ACTUALISER L'APPARENCE DES BUTTON
-      filterButtons.forEach((btn) => {
-        btn.style.background = "none";
-        btn.style.color = "#1D6154";
-      });
-      button.style.background = "#1D6154";
-      button.style.color = "white";
-      // REMETTRE A ZERO LA GALLERIE
-      gallery.innerHTML = "";
-      // SI LE BUTTON EST 'TOUS'
-      if (dataId === "0") {
-        works.map((work) => {
-          gallery.appendChild(createfigure(work));
+// ACTIVER LES FILTRES
+export function setFiltersRules(listOfWorks) {
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  const gallery = document.querySelector(".gallery");
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      try {
+        const dataId = button.dataset.id;
+        // ACTUALISER L'APPARENCE DES BUTTON
+        filterButtons.forEach((btn) => {
+          btn.style.background = "none";
+          btn.style.color = "#1D6154";
         });
-        console.log("travaux filtrés :", works);
+        button.style.background = "#1D6154";
+        button.style.color = "white";
+        // REMETTRE A ZERO LA GALLERIE
+        gallery.innerHTML = "";
+        // SI LE BUTTON EST 'TOUS'
+        if (dataId === "0") {
+          listOfWorks.map((work) => {
+            gallery.appendChild(createfigure(work));
+          });
+          console.log("travaux filtrés :", listOfWorks);
+        }
+        // SINON, RETROUVER L'ID CORESPONDANT A LA CATEGORY DU BUTTON
+        else {
+          // CREER UN TABLEAU CONTENANT LES TRAVAUX FILTRES
+          const filteredWorks = listOfWorks.filter((work) => {
+            return work.categoryId === +dataId; //dataId est ici transformé en Int gràce au "+"
+          });
+          console.log("travaux filtrés : ", filteredWorks);
+          // INTEGRER LES TRAVAUX FILTRES DANS LA GALLERIE
+          filteredWorks.map((work) => {
+            gallery.appendChild(createfigure(work));
+          });
+        }
+      } catch (err) {
+        window.alert(
+          "problême de connection : impossible d'activer les filtres"
+        );
+        console.log(err);
       }
-      // SINON, RETROUVER L'ID CORESPONDANT A LA CATEGORY DU BUTTON
-      else {
-        // CREER UN TABLEAU CONTENANT LES TRAVAUX FILTRES
-        const filteredWorks = works.filter((work) => {
-          return work.categoryId === +dataId; // dataId est ici transformé en Int gràce au "+"
-        });
-        console.log("travaux filtrés : ", filteredWorks);
-        // INTEGRER LES TRAVAUX FILTRES DANS LA GALLERIE
-        filteredWorks.map((work) => {
-          gallery.appendChild(createfigure(work));
-        });
-      }
-    } catch (err) {
-      window.alert("problême de connection : impossible d'activer les filtres");
-      console.log(err);
-    }
+    });
   });
-});
+}

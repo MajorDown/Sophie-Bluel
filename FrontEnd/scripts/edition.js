@@ -1,74 +1,23 @@
-// IMPORTS
-import { manageEditionMode } from "./authentification.js";
-import { majModalgallery } from "./modal.gallery.js";
-import { categories, majGallery, works } from "./gallery.js";
-import { getWorks } from "./fetchData.js";
-import {
-  previewPhoto,
-  createOptionsByCategories,
-  returnToGalleryModal,
-  createNewWork,
-} from "./modal.addPhoto.js";
-
-// ELEMENTS DU DOM
-const modifierBtn = document.getElementById("modifier");
-const editionModal = document.getElementById("edition-modal");
-const overlay = document.getElementById("overlay");
-const modalViewGallery = document.getElementById("modal-view-gallery");
-const modalViewAddPhoto = document.getElementById("modal-view-add-photo");
-const modalClose = document.querySelector(".modal-close");
-const goBack = document.getElementById("goBack");
-const modalGallery = document.getElementById("modal-gallery");
-const addPhotoModalBtn = document.getElementById("add-photo-modal-btn");
-const addPhotoBtn = document.getElementById("addPhotoBtn");
-const newWorkForm = document.getElementById("new-work-form");
-
-// ACCES AU MODE EDITION
-manageEditionMode();
-
 // OUVRIR LA MODAL (DIRECTEMENT SUR "GALLERIE PHOTO")
-function openEditionModal() {
+export function openEditionModal() {
+  const editionModal = document.getElementById("edition-modal");
   editionModal.classList.add("active");
+  const modalViewGallery = document.getElementById("modal-view-gallery");
   modalViewGallery.classList.add("active");
-  majModalgallery(works);
 }
-modifierBtn.addEventListener("click", () => openEditionModal());
-
-// OUVRIR LA MODAL "AJOUTER PHOTO"
-function openAddPhotoModal() {
-  modalViewGallery.classList.remove("active");
-  modalViewAddPhoto.classList.add("active");
-  createOptionsByCategories(categories);
-}
-addPhotoModalBtn.addEventListener("click", () => openAddPhotoModal());
-
-// PREVISUALISER L'UPLOAD DE L'INPUT
-addPhotoBtn.addEventListener("change", () => previewPhoto());
-
-// REVENIR A LA MODAL GALLERY
-goBack.addEventListener("click", () => returnToGalleryModal());
-
-// ENVOYER LE FORMULAIRE POUR UN NOUVEAU WORK
-newWorkForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  await createNewWork();
-  const newWorks = await getWorks();
-  majModalgallery(newWorks);
-  majGallery(newWorks);
-  returnToGalleryModal();
-});
 
 // FERMER LA MODAL EDITION
-async function closeModal() {
-  modalGallery.innerHTML = "";
-  modalViewGallery.classList.remove("active");
+export function closeEditionModal() {
+  const editionModal = document.getElementById("edition-modal");
   editionModal.classList.remove("active");
+  const modalViewGallery = document.getElementById("modal-view-gallery");
+  modalViewGallery.classList.remove("active");
 }
 
-// POUVOIR FERMER LA MODAL EN CLIQUANT SUR LA CROIX
-modalClose.addEventListener("click", () => closeModal());
-
-// POUVOIR FERMER LA MODAL EN CLIQUANT A L'EXTERIEUR
-overlay.addEventListener("click", () => {
-  closeModal();
-});
+// OUVRIR LA MODAL "AJOUTER PHOTO"
+export function openAddPhotoModal() {
+  const modalViewGallery = document.getElementById("modal-view-gallery");
+  modalViewGallery.classList.remove("active");
+  const modalViewAddPhoto = document.getElementById("modal-view-add-photo");
+  modalViewAddPhoto.classList.add("active");
+}

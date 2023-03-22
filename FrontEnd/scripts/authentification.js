@@ -1,10 +1,3 @@
-// ELEMENTS DU DOM
-const editionHeader = document.getElementById("edition-header");
-const loginToLogout = document.getElementById("loginToLogout");
-const modifierIntro = document.getElementById("modifier-intro");
-const modifierBtn = document.getElementById("modifier");
-const filterByCategory = document.getElementById("filter-by-category");
-
 // AUTHENTIFIER L'UTILISATEUR
 function isConnected() {
   if (sessionStorage.getItem("token")) return true;
@@ -13,6 +6,13 @@ function isConnected() {
 
 // ACCEDER AU MODE EDITION
 export function manageEditionMode() {
+  // ELEMENTS DU DOM
+  const editionHeader = document.getElementById("edition-header");
+  const loginToLogout = document.getElementById("loginToLogout");
+  const modifierIntro = document.getElementById("modifier-intro");
+  const modifierBtn = document.getElementById("modifier");
+  const filterByCategory = document.getElementById("filter-by-category");
+  // CONDITIONNEMENT
   if (isConnected() === true) {
     loginToLogout.innerText = "logout";
     loginToLogout.addEventListener("click", () => {
