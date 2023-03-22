@@ -41,7 +41,7 @@ modifierBtn.addEventListener("click", () => {
 
 // FERMER LA MODALE D'EDITION EN CLIQUANT SUR LA CROIX
 const modalClose = document.querySelector(".modal-close");
-modalClose.addEventListener("click", () => closeEditionModal());
+modalClose.addEventListener("click", closeEditionModal);
 
 // FERMER LA MODALE D'EDITION EN CLIQUANT SUR L'OVERLAY
 const overlay = document.getElementById("overlay");

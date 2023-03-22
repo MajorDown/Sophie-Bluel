@@ -467,6 +467,7 @@ input[type="submit"] {
 	color: black;
 	font-size: 30px;
 	text-decoration: none;
+	cursor: pointer;
 }
 
 #edition-modal-content h3 {
